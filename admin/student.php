@@ -52,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && (
 
 // --- AJAX UPDATE ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['StudentID']) && isset($_POST['FirstName']) && isset($_POST['LastName']) && !isset($_POST['addStudent']) && !isset($_POST['deleteStudent'])) {
-  $studentid = intval($_POST['StudentID']);
+  $studentid = $conn->real_escape_string($_POST['StudentID']);
+  $originalStudentID = $conn->real_escape_string($_POST['OriginalStudentID']);
   $firstname = $conn->real_escape_string($_POST['FirstName']);
   $lastname = $conn->real_escape_string($_POST['LastName']);
   $gender = $conn->real_escape_string($_POST['Gender']);
@@ -72,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['StudentID']) && isset
     Email='$email',
     Nationality='$nationality',
     Birthdate='$birthdate'
-    WHERE StudentID=$studentid";
+    WHERE StudentID='$originalStudentID'";
 
   $success = $conn->query($sql);
 
@@ -772,6 +773,39 @@ if (count($where) > 0) {
             color: #005c00;
         }
         /* Center the download button in the table cell */
+
+         /* Logout Button Styles */
+         .sidebar-logout {
+            margin-top: auto;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .logout-btn i {
+            font-size: 1.1rem;
+        }
   </style>
 </head>
 <body>
@@ -804,6 +838,9 @@ if (count($where) > 0) {
                     <span class="sidebar-section-label">Finance & Analytics</span>
                     <a class="nav-link" href="payment.php"><i class="fas fa-credit-card"></i><span>Invoices</span></a>
                     <a class="nav-link" href="statistics.php"><i class="fas fa-chart-line"></i><span>Statistics</span></a>
+                </div>
+                <div class="nav-section sidebar-logout">
+                    <a class="logout-btn" href="logout.php"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
                 </div>
             </div>
         </div>
@@ -909,8 +946,8 @@ if (count($where) > 0) {
       <span class="close" id="closeEditModal">&times;</span>
       <h2>Edit Student</h2>
       <form id="editForm">
-        <input type="hidden" name="StudentID" id="editStudentID">
-        <p><label>Student ID:</label><br><input type="text" name="FirstName" id="editStudentID" required></p>
+        <input type="hidden" name="OriginalStudentID" id="editOriginalStudentID">
+        <p><label>Student ID:</label><br><input type="text" name="StudentID" id="editStudentID" required></p>
         <p><label>First Name:</label><br><input type="text" name="FirstName" id="editFirstName" required></p>
         <p><label>Last Name:</label><br><input type="text" name="LastName" id="editLastName" required></p>
         <p><label>Gender:</label><br>
@@ -1115,6 +1152,7 @@ if (count($where) > 0) {
   document.querySelectorAll('.edit-btn').forEach(btn => {
     btn.onclick = function() {
       editModal.style.display = 'block';
+      document.getElementById('editOriginalStudentID').value = this.dataset.id;
       document.getElementById('editStudentID').value = this.dataset.id;
       document.getElementById('editFirstName').value = this.dataset.firstname;
       document.getElementById('editLastName').value = this.dataset.lastname;

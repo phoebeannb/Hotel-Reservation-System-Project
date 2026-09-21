@@ -362,29 +362,53 @@ if (count($where) > 0) {
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
+            animation: modal-fade-in 0.25s;
+        }
+        @keyframes modal-fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .modal-content {
             background-color: white;
             margin: 5% auto;
             padding: 2rem;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
+            border-radius: 12px;
+            width: 95%;
+            max-width: 420px;
             position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,128,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
         }
         .close {
             position: absolute;
             right: 1rem;
             top: 1rem;
-            font-size: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
             cursor: pointer;
-            color: #666;
+            color: #008000;
+            background: none;
+            border: none;
+            transition: color 0.2s, transform 0.2s;
+            z-index: 10;
         }
         .close:hover {
-            color: #333;
+            color: #e74c3c;
+            transform: scale(1.15);
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #008000;
+            letter-spacing: 0.5px;
+            text-align: left;
         }
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
         .form-group label {
             display: block;
@@ -525,6 +549,182 @@ if (count($where) > 0) {
                 gap: 0.25rem;
             }
         }
+        @media (max-width: 600px) {
+            .modal-content {
+                width: 98%;
+                max-width: 98vw;
+                padding: 1rem;
+            }
+            .modal-content h2 {
+                font-size: 1.1rem;
+            }
+        }
+        /* Search Bar Styles */
+        .search-filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0,128,0,0.07);
+            padding: 0.25rem 1rem 0.25rem 0.75rem;
+            border: 1.5px solid #e0e0e0;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            min-width: 260px;
+            max-width: 350px;
+        }
+        .search-wrapper:focus-within {
+            border-color: #008000;
+            box-shadow: 0 2px 8px rgba(0,128,0,0.13);
+        }
+        .search-icon {
+            color: #008000;
+            font-size: 1.1rem;
+            margin-right: 0.5rem;
+            opacity: 0.85;
+        }
+        .search-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 1rem;
+            color: #333;
+            width: 100%;
+            padding: 0.5rem 0;
+        }
+        .search-input::placeholder {
+            color: #bdbdbd;
+            font-size: 0.98rem;
+        }
+        /* Modal Save/Create Button Styles */
+        .modal-content button[type="submit"] {
+            background: #008000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            padding: 0.85rem 0;
+            margin-top: 1.2rem;
+            width: 100%;
+            box-shadow: 0 1px 4px rgba(0,128,0,0.07);
+            transition: background 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+        .modal-content button[type="submit"]:hover {
+            background: #005c00;
+            box-shadow: 0 2px 8px rgba(0,128,0,0.13);
+        }
+        @media (max-width: 600px) {
+            .search-wrapper {
+                min-width: 0;
+                width: 100%;
+                max-width: 100vw;
+            }
+            .modal-content button[type="submit"] {
+                width: 100%;
+                font-size: 1rem;
+            }
+        }
+        /* Download Modal Enhanced Styles */
+        #downloadModal .modal-content {
+            background: #f8f9fa;
+            box-shadow: 0 8px 32px rgba(0,128,0,0.10), 0 1.5px 6px rgba(0,128,0,0.08);
+            padding-top: 2.5rem;
+            position: relative;
+        }
+        #downloadModal .modal-content h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            color: #008000;
+            margin-bottom: 1.5rem;
+        }
+        #downloadModal .modal-content h2::before {
+            content: '\f019';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            font-size: 1.3em;
+            color: #008000;
+            margin-right: 0.5rem;
+        }
+        #downloadModal .filter-btn {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 4px;
+            border: none;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff;
+            color: #008000;
+            box-shadow: 0 1px 4px rgba(0,128,0,0.07);
+        }
+        #downloadModal .filter-btn:hover {
+            background: #e8f5e8;
+            color: #005c00;
+            box-shadow: 0 2px 8px rgba(0,128,0,0.13);
+        }
+        #copyTableBtn { color: #1976d2; }
+        #copyTableBtn:hover { background: #e3f2fd; color: #0d47a1; }
+        #csvTableBtn { color: #ff9800; }
+        #csvTableBtn:hover { background: #fff3e0; color: #e65100; }
+        #excelTableBtn { color: #388e3c; }
+        #excelTableBtn:hover { background: #e8f5e9; color: #1b5e20; }
+        #pdfTableBtn { color: #d32f2f; }
+        #pdfTableBtn:hover { background: #ffebee; color: #b71c1c; }
+        #printTableBtn { color: #6d4c41; }
+        #printTableBtn:hover { background: #efebe9; color: #3e2723; }
+        /* Row highlight animation for update */
+        .row-updated {
+            animation: rowHighlight 1.2s;
+        }
+        @keyframes rowHighlight {
+            0% { background: #e8f5e8; }
+            60% { background: #e8f5e8; }
+            100% { background: inherit; }
+        }
+        /* Main Download Button Style */
+        .download-table-btn {
+            background: #008000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            box-shadow: 0 2px 8px rgba(0,128,0,0.10);
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+            cursor: pointer;
+            outline: none;
+        }
+        .download-table-btn i {
+            color: #fff;
+            font-size: 1.25em;
+            transition: color 0.2s;
+        }
+        .download-table-btn:hover, .download-table-btn:focus {
+            background: #005c00;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0,128,0,0.18);
+            transform: translateY(-2px) scale(1.08);
+        }
+        .download-table-btn:active {
+            background: #004400;
+        }
     </style>
 </head>
 <body>
@@ -574,7 +774,12 @@ if (count($where) > 0) {
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" id="searchInput" class="search-input" placeholder="Search Rooms">
             </div>
-            <button class="add-room-btn" id="createBtn">Add Room</button>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <button class="add-room-btn" id="createBtn">Add Room</button>
+                <button class="download-table-btn" id="mainDownloadBtn" title="Download Table" aria-label="Download Table">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
         </div>
     </div>
     <div class="table-container">
@@ -589,7 +794,6 @@ if (count($where) > 0) {
                     <th>Room Status</th>
                     <th>Capacity</th>
                     <th>Actions</th>
-                    <th>Download</th>
                 </tr>
             </thead>
             <tbody>
@@ -613,6 +817,7 @@ if (count($where) > 0) {
                                 data-roomperhour="<?php echo htmlspecialchars($row['RoomPerHour']); ?>"
                                 data-roomstatus="<?php echo htmlspecialchars($row['RoomStatus']); ?>"
                                 data-capacity="<?php echo htmlspecialchars($row['Capacity']); ?>"
+                                title="Edit Room" aria-label="Edit Room"
                             ><i class="fas fa-edit"></i></button>
                             <button type="button" class="action-btn view-btn"
                                 data-id="<?php echo $row['RoomID']; ?>"
@@ -622,16 +827,13 @@ if (count($where) > 0) {
                                 data-roomperhour="<?php echo htmlspecialchars($row['RoomPerHour']); ?>"
                                 data-roomstatus="<?php echo htmlspecialchars($row['RoomStatus']); ?>"
                                 data-capacity="<?php echo htmlspecialchars($row['Capacity']); ?>"
+                                title="View Room" aria-label="View Room"
                             ><i class="fas fa-eye"></i></button>
                             <button type="button" class="action-btn delete-btn"
                                 data-id="<?php echo $row['RoomID']; ?>"
+                                title="Delete Room" aria-label="Delete Room"
                             ><i class="fas fa-trash"></i></button>
                         </div>
-                    </td>
-                    <td>
-                        <button class="download-table-btn" title="Download Table" onclick="showDownloadModal(event)">
-                            <i class="fas fa-download"></i>
-                        </button>
                     </td>
                 </tr>
                 <?php endwhile; ?>
@@ -669,7 +871,7 @@ if (count($where) > 0) {
       </select>
     </p>
     <p><label>Capacity:</label><br><input type="number" step="0.01" name="Capacity" id="editCapacity" required></p>
-    <button type="submit" style="margin-top:1rem;">Save</button>
+    <button type="submit">Save</button>
     </form>
   </div>
   </div>
@@ -682,39 +884,59 @@ if (count($where) > 0) {
   </div>
   </div>
   <!-- Download Modal -->
-  <div id="downloadModal" class="modal">
+  <div id="downloadModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="downloadModalTitle">
     <div class="modal-content" style="width: 350px;">
-      <span class="close" id="closeDownloadModal">&times;</span>
-      <h2>Download Table</h2>
+      <span class="close" id="closeDownloadModal" tabindex="0" aria-label="Close Download Modal">&times;</span>
+      <h2 id="downloadModalTitle">Download Table</h2>
       <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-        <button class="filter-btn" id="copyTableBtn"><i class="fas fa-copy"></i> Copy </button>
-        <button class="filter-btn" id="csvTableBtn"><i class="fas fa-file-csv"></i> CSV File</button>
-        <button class="filter-btn" id="excelTableBtn"><i class="fas fa-file-excel"></i> Excel File</button>
-        <button class="filter-btn" id="pdfTableBtn"><i class="fas fa-file-pdf"></i> PDF File</button>
-        <button class="filter-btn" id="printTableBtn"><i class="fas fa-file-pdf"></i> Print File</button>
+        <button class="filter-btn" id="copyTableBtn" title="Copy Table to Clipboard" aria-label="Copy Table to Clipboard"><i class="fas fa-copy"></i> Copy </button>
+        <button class="filter-btn" id="csvTableBtn" title="Download as CSV" aria-label="Download as CSV"><i class="fas fa-file-csv"></i> CSV File</button>
+        <button class="filter-btn" id="excelTableBtn" title="Download as Excel" aria-label="Download as Excel"><i class="fas fa-file-excel"></i> Excel File</button>
+        <button class="filter-btn" id="pdfTableBtn" title="Download as PDF" aria-label="Download as PDF"><i class="fas fa-file-pdf"></i> PDF File</button>
+        <button class="filter-btn" id="printTableBtn" title="Print Table" aria-label="Print Table"><i class="fas fa-file-pdf"></i> Print File</button>
       </div>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
+    // Toast notification
+    function showToast(message, isSuccess = true) {
+      let toast = document.createElement('div');
+      toast.innerText = message;
+      toast.style.position = 'fixed';
+      toast.style.bottom = '30px';
+      toast.style.right = '30px';
+      toast.style.background = isSuccess ? '#008000' : '#e74c3c';
+      toast.style.color = 'white';
+      toast.style.padding = '1rem 2rem';
+      toast.style.borderRadius = '8px';
+      toast.style.fontWeight = 'bold';
+      toast.style.zIndex = 9999;
+      toast.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+      document.body.appendChild(toast);
+      setTimeout(() => { toast.remove(); }, 2500);
+    }
     // Download Modal logic
     const downloadModal = document.getElementById('downloadModal');
     const closeDownloadModal = document.getElementById('closeDownloadModal');
-
-    // Show modal from table cell download icon
-    function showDownloadModal(e) {
+    // Show modal from main download button
+    document.getElementById('mainDownloadBtn').onclick = function(e) {
       e.preventDefault();
       downloadModal.style.display = 'block';
-    }
-
+      closeDownloadModal.focus();
+    };
     closeDownloadModal.onclick = function() {
       downloadModal.style.display = 'none';
+    };
+    closeDownloadModal.onkeydown = function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        downloadModal.style.display = 'none';
+      }
     };
     window.addEventListener('click', function(e) {
       if (e.target == downloadModal) downloadModal.style.display = 'none';
     });
-
     // Helper: get table data as array (optionally exclude actions/download columns)
     function getTableData(excludeActions = false) {
       const rows = Array.from(document.querySelectorAll('.room-table tbody tr'))
@@ -896,6 +1118,15 @@ if (count($where) > 0) {
   const editModal = document.getElementById('editModal');
   const closeEditModal = document.getElementById('closeEditModal');
   closeEditModal.onclick = function() { editModal.style.display = 'none'; }
+  editModal.setAttribute('role', 'dialog');
+  editModal.setAttribute('aria-modal', 'true');
+  closeEditModal.setAttribute('tabindex', '0');
+  closeEditModal.setAttribute('aria-label', 'Close Edit Modal');
+  closeEditModal.onkeydown = function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      editModal.style.display = 'none';
+    }
+  };
   const editForm = document.getElementById('editForm');
   editForm.onsubmit = function(e) {
     e.preventDefault();
@@ -927,10 +1158,15 @@ if (count($where) > 0) {
             editBtn.dataset.roomstatus = document.getElementById('editRoomStatus').value;
             editBtn.dataset.capacity = document.getElementById('editCapacity').value;
           }
+          // Highlight the updated row
+          row.classList.remove('row-updated');
+          void row.offsetWidth; // trigger reflow
+          row.classList.add('row-updated');
         }
         editModal.style.display = 'none';
+        showToast('Room updated successfully!');
       } else {
-        alert('Update failed.');
+        showToast('Update failed.', false);
       }
     });
   }
@@ -941,6 +1177,15 @@ if (count($where) > 0) {
   // Delete Modal
   const deleteModal = document.getElementById('deleteModal');
   const closeDeleteModal = document.getElementById('closeDeleteModal');
+  deleteModal.setAttribute('role', 'dialog');
+  deleteModal.setAttribute('aria-modal', 'true');
+  closeDeleteModal.setAttribute('tabindex', '0');
+  closeDeleteModal.setAttribute('aria-label', 'Close Delete Modal');
+  closeDeleteModal.onkeydown = function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      deleteModal.style.display = 'none';
+    }
+  };
   let deleteRoomId = null;
   document.querySelector('.confirm-delete').onclick = function() {
     if (!deleteRoomId) return;
@@ -955,20 +1200,31 @@ if (count($where) > 0) {
     .then(data => {
       if (data.success) {
         deleteModal.style.display = 'none';
-        setTimeout(() => location.reload(), 200);
+        showToast('Room deleted successfully!');
+        setTimeout(() => location.reload(), 800);
       } else {
-        alert('Delete failed.');
+        showToast('Delete failed.', false);
       }
     });
   }
   document.querySelector('.cancel-delete').onclick = function() { deleteModal.style.display = 'none'; deleteRoomId = null; }
   closeDeleteModal.onclick = function() { deleteModal.style.display = 'none'; }
-  // Modal close on outside click
+  // Modal close on outside click and Escape key
+  window.onkeydown = function(event) {
+    if (event.key === 'Escape') {
+      if (editModal.style.display === 'block') editModal.style.display = 'none';
+      if (viewModal.style.display === 'block') viewModal.style.display = 'none';
+      if (createModal.style.display === 'block') createModal.style.display = 'none';
+      if (deleteModal.style.display === 'block') deleteModal.style.display = 'none';
+      if (downloadModal.style.display === 'block') downloadModal.style.display = 'none';
+    }
+  }
   window.onclick = function(event) {
     if (event.target == editModal) editModal.style.display = 'none';
     if (event.target == viewModal) viewModal.style.display = 'none';
     if (event.target == createModal) createModal.style.display = 'none';
     if (event.target == deleteModal) deleteModal.style.display = 'none';
+    if (event.target == downloadModal) downloadModal.style.display = 'none';
   }
   // Search logic
   const searchInput = document.getElementById('searchInput');
@@ -1026,6 +1282,7 @@ if (count($where) > 0) {
                       data-roomperhour="${json.room.RoomPerHour}"
                       data-roomstatus="${json.room.RoomStatus}"
                       data-capacity="${json.room.Capacity}"
+                      title="Edit Room" aria-label="Edit Room"
                     ><i class="fas fa-edit"></i></button>
                     <button type="button" class="action-btn view-btn"
                       data-id="${json.room.RoomID}"
@@ -1035,16 +1292,13 @@ if (count($where) > 0) {
                       data-roomperhour="${json.room.RoomPerHour}"
                       data-roomstatus="${json.room.RoomStatus}"
                       data-capacity="${json.room.Capacity}"
+                      title="View Room" aria-label="View Room"
                     ><i class="fas fa-eye"></i></button>
                     <button type="button" class="action-btn delete-btn"
                       data-id="${json.room.RoomID}"
+                      title="Delete Room" aria-label="Delete Room"
                     ><i class="fas fa-trash"></i></button>
                   </div>
-                </td>
-                <td>
-                  <button class="download-table-btn" title="Download Table" onclick="showDownloadModal(event)">
-                    <i class="fas fa-download"></i>
-                  </button>
                 </td>
               `;
               tbody.prepend(row);
@@ -1052,9 +1306,10 @@ if (count($where) > 0) {
             }
             createModal.style.display = 'none';
             createForm.reset();
+            showToast('Room created successfully!');
           });
       } else {
-        alert('Create failed.');
+        showToast('Create failed.', false);
       }
     });
   }

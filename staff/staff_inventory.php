@@ -261,7 +261,7 @@ if ($result) {
     <!-- SIDEBAR -->
     <button class="hamburger" id="sidebarToggle" aria-label="Open sidebar"><span></span><span></span><span></span></button>
     <div class="sidebar">
-        <img src="images/villavalorelogo.png" alt="Villa Valore Logo" class="sidebar-logo">
+        <img src="villavalorelogo.png" alt="Villa Valore Logo" class="sidebar-logo">
         <h4 class="sidebar-title">Villa Valore</h4>
         <div class="nav-section">
             <a class="nav-link" href="staff_dashboard.php"><i class="fas fa-th-large"></i>Dashboard</a>

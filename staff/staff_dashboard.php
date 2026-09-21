@@ -170,7 +170,7 @@ $reservation = $conn->query("SELECT COUNT(*) as count FROM reservations WHERE St
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="sDashboard_styles.css">
+    <link rel="stylesheet" href="sDashboard_style.css">
 </head>
 <body>
     <button class="hamburger" id="sidebarToggle" aria-label="Open sidebar">
@@ -180,7 +180,7 @@ $reservation = $conn->query("SELECT COUNT(*) as count FROM reservations WHERE St
     </button>
     <!-- Sidebar Navigation (copied from dashboard.php) -->
     <div class="sidebar">
-        <img src="images/villavalorelogo.png" alt="Villa Valore Logo" class="sidebar-logo">
+        <img src="villavalorelogo.png" alt="Villa Valore Logo" class="sidebar-logo">
         <h4 class="sidebar-title">Villa Valore</h4>
         <div class="nav-section">
             <a class="nav-link active" href="staff_dashboard.php"><i class="fas fa-th-large"></i>Dashboard</a>

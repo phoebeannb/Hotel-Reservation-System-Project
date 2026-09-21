@@ -1513,15 +1513,7 @@
             <li><a href="contact.php">Location</a></li>
           </ul>
         </div>
-        <div class="footer-link-col">
-          <h4>Connect</h4>
-          <ul>
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="mailto:villavalorehotel@gmail.com">Email Us</a></li>
-          </ul>
-        </div>
+        
       </div>
     </div>
     <div class="footer-bottom">

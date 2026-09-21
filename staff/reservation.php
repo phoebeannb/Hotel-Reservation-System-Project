@@ -468,7 +468,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
         <span></span>
     </button>
     <div class="sidebar">
-        <img src="images/villavalorelogo.png" alt="Villa Valore Logo" class="sidebar-logo">
+        <img src="villavalorelogo.png" alt="Villa Valore Logo" class="sidebar-logo">
         <h4 class="sidebar-title">Villa Valore</h4>
         <a class="nav-link" href="staff_dashboard.php"><i class="fas fa-th-large"></i>Dashboard</a>
         <a class="nav-link active" href="reservation.php"><i class="fas fa-calendar-check"></i>Reservation</a>
