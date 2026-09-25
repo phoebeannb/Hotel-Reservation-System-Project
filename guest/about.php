@@ -21,10 +21,11 @@
 
     /* Header Styles */
     .top-header {
-      background: #018000;
+      background: linear-gradient(135deg, #019200, #016000);
       color: white;
-      padding: 10px 0;
-      font-size: 14px;
+      padding: 8px 0;
+      font-size: 13px;
+      letter-spacing: 0.2px;
     }
 
     .top-header-content {
@@ -38,10 +39,27 @@
 
     .contact-info {
       display: flex;
-      gap: 30px;
+      gap: 28px;
     }
 
     .contact-info span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.95;
+      transition: opacity 0.2s;
+    }
+
+    .contact-info span:hover {
+      opacity: 1;
+    }
+
+    .contact-info span i {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    .social-links {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -49,22 +67,37 @@
 
     .social-links a {
       color: white;
-      margin-left: 20px;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 13px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      transition: all 0.25s ease;
     }
 
     .social-links a:hover {
-      opacity: 0.8;
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-2px);
     }
 
     /* Main Navigation */
     .main-nav {
-      background: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
       position: sticky;
       top: 0;
       z-index: 1000;
+      transition: box-shadow 0.3s ease, padding 0.3s ease;
+    }
+
+    .main-nav.scrolled {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     }
 
     .nav-container {
@@ -73,37 +106,50 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
+      padding: 14px 20px;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
     }
 
     .logo img {
-      height: 70px;
+      height: 54px;
       width: auto;
     }
 
     .logo-text h1 {
       color: #018000;
-      font-size: 28px;
-      margin-bottom: 5px;
+      font-size: 23px;
+      margin-bottom: 3px;
       font-weight: 600;
+      letter-spacing: -0.3px;
     }
 
     .logo-text small {
-      color: #666;
-      font-size: 13px;
+      color: #777;
+      font-size: 12px;
+      letter-spacing: 0.5px;
     }
 
     .nav-menu {
       display: flex;
       list-style: none;
-      gap: 40px;
+      gap: 34px;
       align-items: center;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      color: #018000;
+      cursor: pointer;
+      padding: 6px;
+      line-height: 1;
     }
 
     .nav-menu a {
@@ -137,20 +183,25 @@
     .book-now-btn {
       background: #018000;
       color: white !important;
-      padding: 15px 30px;
+      padding: 12px 26px;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.25s ease;
       text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      box-shadow: 0 6px 16px rgba(1,128,0,0.25);
     }
 
     .book-now-btn:hover {
       background: #016000;
       color: white !important;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(1,128,0,0.32);
     }
 
     /* Hero Section */
@@ -346,8 +397,73 @@
     }
 
     @media (max-width: 768px) {
+      .nav-toggle {
+        display: block;
+      }
+
       .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        height: 100vh;
+        width: 280px;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 100px 30px 30px;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+        transition: right 0.3s ease;
+        z-index: 1001;
+      }
+
+      .nav-menu.active {
+        right: 0;
+      }
+
+      .nav-menu li {
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .nav-menu li a {
+        display: block;
+        padding: 16px 0;
+      }
+
+      .nav-menu .book-now-btn {
+        margin-top: 15px;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        margin-top: 0;
+        padding: 0 0 0 15px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      .dropdown.active .dropdown-menu {
+        max-height: 200px;
+      }
+
+      .nav-overlay {
         display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 999;
+      }
+
+      .nav-overlay.active {
+        display: block;
       }
 
       .hero h1 {
@@ -465,151 +581,6 @@
       display: none;
     }
 
-    /* Footer */
-    .footer {
-      background: #018000;
-      color: #fff;
-      padding: 60px 0 0;
-      font-family: 'Arial', sans-serif;
-    }
-    .footer-main {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 40px;
-      flex-wrap: wrap;
-      padding: 0 30px;
-    }
-    .footer-newsletter {
-      flex: 2;
-      min-width: 320px;
-    }
-    .footer-newsletter h2 {
-      font-size: 2em;
-      font-weight: 600;
-      margin-bottom: 18px;
-      color: #fff;
-    }
-    .footer-newsletter p {
-      font-size: 1.1em;
-      margin-bottom: 25px;
-      color: #e0ffe0;
-    }
-    .newsletter-form {
-      display: flex;
-      align-items: center;
-      border-bottom: 2px solid #fff;
-      max-width: 400px;
-      margin-bottom: 25px;
-    }
-    .newsletter-form input[type="email"] {
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #fff;
-      font-size: 1em;
-      padding: 12px 0;
-      flex: 1;
-    }
-    .newsletter-form input::placeholder {
-      color: #e0ffe0;
-      opacity: 1;
-    }
-    .newsletter-form button {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.3em;
-      cursor: pointer;
-      padding: 0 10px;
-      transition: color 0.2s;
-    }
-    .newsletter-form button:hover {
-      color: #b6ffb6;
-    }
-    .footer-social {
-      margin-top: 18px;
-      display: flex;
-      gap: 18px;
-    }
-    .footer-social a {
-      color: #fff;
-      font-size: 1.3em;
-      transition: color 0.2s;
-    }
-    .footer-social a:hover {
-      color: #b6ffb6;
-    }
-    .footer-links {
-      flex: 3;
-      display: flex;
-      gap: 60px;
-      min-width: 320px;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-    .footer-link-col {
-      min-width: 140px;
-    }
-    .footer-link-col h4 {
-      color: #fff;
-      font-size: 1.1em;
-      margin-bottom: 15px;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-    .footer-link-col ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .footer-link-col ul li {
-      margin-bottom: 10px;
-    }
-    .footer-link-col ul li a {
-      color: #e0ffe0;
-      text-decoration: none;
-      font-size: 1em;
-      transition: color 0.2s;
-    }
-    .footer-link-col ul li a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-    .footer-bottom {
-      background: #016000;
-      color: #b6ffb6;
-      text-align: center;
-      padding: 18px 0 12px;
-      font-size: 1em;
-      margin-top: 40px;
-    }
-    @media (max-width: 900px) {
-      .footer-main {
-        flex-direction: column;
-        gap: 40px;
-        align-items: flex-start;
-      }
-      .footer-links {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 40px;
-      }
-    }
-    @media (max-width: 600px) {
-      .footer-main {
-        padding: 0 10px;
-      }
-      .footer-links {
-        flex-direction: column;
-        gap: 25px;
-      }
-      .footer-link-col {
-        min-width: 0;
-      }
-    }
     /* Footer */
     .footer {
       background: #018000;
@@ -962,10 +933,6 @@
     }
 
     @media (max-width: 768px) {
-      .nav-menu {
-        display: none;
-      }
-
       .hero {
         height: 70vh;
       }
@@ -1310,10 +1277,14 @@
           </ul>
         </li>
         <li><a href="contact.php">Contact</a></li>
-        <li><a href="booking.php" class="book-now-btn">Book Now</a></li>
+        <li><a href="booking.php" class="book-now-btn"><i class="fas fa-calendar-check"></i> Book Now</a></li>
       </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -1470,6 +1441,42 @@
   </footer>
 
   <script>
+    // Mobile nav toggle + scroll shadow
+    document.addEventListener('DOMContentLoaded', function() {
+      const navToggle = document.getElementById('navToggle');
+      const navMenu = document.querySelector('.nav-menu');
+      const navOverlay = document.getElementById('navOverlay');
+      const mainNav = document.querySelector('.main-nav');
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdown = document.querySelector('.dropdown');
+
+      function closeMobileMenu() {
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+
+      navToggle.addEventListener('click', function() {
+        const isOpen = navMenu.classList.toggle('active');
+        navOverlay.classList.toggle('active', isOpen);
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      navOverlay.addEventListener('click', closeMobileMenu);
+
+      // On mobile, tapping "Rooms" expands the dropdown instead of relying on hover
+      dropdownToggle.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          dropdown.classList.toggle('active');
+        }
+      });
+
+      window.addEventListener('scroll', function() {
+        mainNav.classList.toggle('scrolled', window.scrollY > 10);
+      });
+    });
+
     // Cookies and Privacy Policy functionality
     document.addEventListener('DOMContentLoaded', function() {
       // Check if user has already accepted cookies

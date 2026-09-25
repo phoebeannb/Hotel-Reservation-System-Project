@@ -133,865 +133,120 @@ if (count($where) > 0) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <style>
-        :root {
-            --theme-green: #008000;
-            --theme-green-dark: #005c00;
-            --theme-green-light: #90ee90;
-            --action-edit: #008000;
-            --action-view: #00b894;
-            --action-delete: #e74c3c;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #f5f6fa; display: flex; }
-         /* Sidebar Styles */
-         .sidebar {
-            width: 180px;
-            background: #008000;
-            min-height: 100vh;
-            padding: 0.5rem 0;
-            color: white;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 1000;
-            transition: left 0.3s, width 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villa Valore — Guests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-        .sidebar-logo {
-            width: 90px;
-            height: 90px;
-            margin: 1.5rem auto 1rem auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .sidebar-logo img {
-            width: 90px;
-            height: 90px;
-            object-fit: contain;
-            border-radius: 0;
-            border: none;
-            background: transparent;
-            box-shadow: none;
-        }
-
-        .sidebar-title {
-            display: block;
-            font-size: 1.25rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            letter-spacing: 1px;
-            /* Professional font styling */
-            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
-            color: #fff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.08);
-        }
-
-        .sidebar .nav-section {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding-left: 1rem;
-            gap: 0.5rem;
-            margin-bottom: 0;
-        }
-
-        .sidebar .nav-section:not(:last-child) {
-            margin-bottom: 1rem;
-        }
-
-        .sidebar .nav-link {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0.35rem 0.6rem;
-            color: white;
-            text-decoration: none;
-            font-size: 0.93rem;
-            margin-bottom: 0.15rem;
-            border-radius: 5px;
-            width: 90%;
-            transition: background-color 0.2s;
-            height: 36px;
-            gap: 0.5rem;
-        }
-
-        .sidebar .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.13);
-        }
-
-        .sidebar .nav-link i {
-            margin: 0;
-            width: 22px;
-            text-align: center;
-            font-size: 1.08rem;
-            opacity: 0.95;
-        }
-
-        .sidebar .nav-link span {
-            font-size: 0.93rem;
-            margin-top: 0;
-            display: block;
-            text-align: left;
-            letter-spacing: 0.5px;
-        }
-
-        .sidebar .management-label {
-            display: none;
-        }
-
-        .sidebar .toggle-btn {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            cursor: pointer;
-            width: 90%;
-            padding: 0 0.6rem;
-            height: 36px;
-            gap: 0.5rem;
-        }
-
-        .sidebar .toggle-btn::after {
-            display: none;
-        }
-
-        .sidebar .submenu {
-            margin-left: 0.3rem;
-            display: none;
-            width: 100%;
-        }
-
-        .sidebar .submenu.active {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .sidebar-nav-center {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            width: 100%;
-            align-items: flex-start;
-        }
-
-
-        /* Top Bar Styles */
-        .top-bar {
-            position: fixed;
-            left: 180px;
-            right: 0;
-            top: 0;
-            height: 60px;
-            background: #fff;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            z-index: 1001;
-            padding: 0 2rem;
-            transition: left 0.3s;
-        }
-        .top-bar-right {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-        }
-        .top-bar-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #f0f2f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: #333;
-            cursor: pointer;
-            position: relative;
-        }
-        .top-bar-account {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #bbb;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        .top-bar-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.7rem;
-            color: #147219;
-            margin-right: 1rem;
-            cursor: pointer;
-        }
-        .main-content { flex: 1; padding: 2rem; margin-left: 200px; overflow-x: hidden; transition: margin-left 0.3s; }
-        .reservation-section { max-width: 1200px; margin: 2rem auto; background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 2rem; }
-        h1 { font-size: 2rem; margin-bottom: 1.5rem; color: #333; }
-        .reservation-table { width: 100%; border-collapse: collapse; }
-        .reservation-table th, .reservation-table td { padding: 1rem; border-bottom: 1px solid #f0f2f5; text-align: left; }
-        .reservation-table th { background: #f8f9fa; color: #666; font-weight: 600; }
-        .reservation-table td { color: #222; font-weight: 500; }
-        /* Action Buttons */
-        .action-group {
-            display: flex;
-            gap: 0.3rem;
-            justify-content: center;
-            align-items: center;
-        }
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            outline: none;
-            border-radius: 50%;
-            padding: 0.3rem;
-            font-size: 1.1rem;
-            background: none;
-            cursor: pointer;
-            transition: background 0.18s, color 0.18s;
-            box-shadow: none;
-        }
-        .action-btn.edit-btn i {
-            color: var(--action-edit);
-        }
-        .action-btn.edit-btn:hover, .action-btn.edit-btn:focus {
-            background: #e6f5ea;
-        }
-        .action-btn.edit-btn:hover i, .action-btn.edit-btn:focus i {
-            color: var(--theme-green-dark);
-        }
-        .action-btn.view-btn i {
-            color: var(--action-view);
-        }
-        .action-btn.view-btn:hover, .action-btn.view-btn:focus {
-            background: #e6f5ea;
-        }
-        .action-btn.view-btn:hover i, .action-btn.view-btn:focus i {
-            color: #00916e;
-        }
-        .action-btn.delete-btn i {
-            color: var(--action-delete);
-        }
-        .action-btn.delete-btn:hover, .action-btn.delete-btn:focus {
-            background: #fbeaea;
-        }
-        .action-btn.delete-btn:hover i, .action-btn.delete-btn:focus i {
-            color: #c0392b;
-        }
-        .action-btn i {
-            font-size: 1em;
-            margin: 0;
-        }
-        /* Center the Actions column */
-        .reservation-table td:nth-child(6) {
-            text-align: center;
-            vertical-align: middle;
-        }
-        /* Modal styles */
-        .modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background: rgba(0,0,0,0.3); }
-        .modal-content { background: #fff; margin: 5% auto; padding: 2rem; border-radius: 10px; width: 400px; position: relative; }
-        .close { position: absolute; right: 1rem; top: 1rem; font-size: 1.5rem; color: #888; cursor: pointer; }
-        .modal-content h2 { margin-bottom: 1rem; }
-        .modal-content label { font-weight: 600; }
-        .modal-content p { margin-bottom: 0.5rem; }
-        /* Hamburger menu styles */
-        .hamburger {
-            display: none;
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1100;
-            width: 36px;
-            height: 36px;
-            background: var(--theme-green);
-            border: none;
-            border-radius: 6px;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        .hamburger span {
-            display: block;
-            width: 22px;
-            height: 3px;
-            background: #fff;
-            margin: 4px 0;
-            border-radius: 2px;
-            transition: 0.3s;
-        }
-        @media (max-width: 900px) {
-            .main-content { margin-left: 0; padding: 1rem; }
-            .sidebar { left: -220px; box-shadow: none; }
-            .sidebar.active { left: 0; box-shadow: 2px 0 8px rgba(0,0,0,0.08); }
-            .hamburger { display: flex; }
-        }
-        @media (max-width: 600px) {
-            .reservation-section { padding: 1rem; }
-            .reservation-table th, .reservation-table td { padding: 0.5rem; font-size: 0.9rem; }
-            h1 { font-size: 1.2rem; }
-        }
-        @media (max-width: 500px) {
-            .reservation-table, .reservation-table thead, .reservation-table tbody, .reservation-table th, .reservation-table td, .reservation-table tr {
-                display: block;
-                width: 100%;
-            }
-            .reservation-table thead { display: none; }
-            .reservation-table tr { margin-bottom: 1rem; border-bottom: 2px solid #f0f2f5; }
-            .reservation-table td {
-                padding-left: 40%;
-                position: relative;
-                font-size: 1rem;
-                border: none;
-                border-bottom: 1px solid #f0f2f5;
-            }
-            .reservation-table td:before {
-                position: absolute;
-                left: 1rem;
-                top: 50%;
-                transform: translateY(-50%);
-
-                font-weight: bold;
-                color: #666;
-                content: attr(data-label);
-                font-size: 0.95rem;
-            }
-        }
-        .search-filter-bar {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .search-input {
-            padding: 0.7rem 2.5rem 0.7rem 2.5rem;
-            border-radius: 1.2rem;
-            border: none;
-            background: #ededed;
-            font-size: 1rem;
-            width: 260px;
-            outline: none;
-        }
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888;
-        }
-        .search-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .filter-btn, .create-btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 1rem;
-            border: 2px solid #222;
-            background: #f5f6fa;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-left: 0.5rem;
-            transition: background 0.2s, color 0.2s;
-        }
-        .filter-btn:hover, .create-btn:hover {
-            background: #222;
-            color: #fff;
-        }
-        .filter-dropdown {
-            display: none;
-            position: absolute;
-            top: 2.5rem;
-            left: 0;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            z-index: 10;
-            min-width: 220px;
-            padding: 1rem;
-        }
-        .filter-dropdown.active {
-            display: block;
-        }
-        .filter-dropdown label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        .filter-dropdown input, .filter-dropdown select {
-            width: 100%;
-            margin-bottom: 1rem;
-            padding: 0.4rem 0.7rem;
-            border-radius: 0.5rem;
-            border: 1px solid #ccc;
-        }
-        .filter-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.5rem;
-        }
-        .modal-content form input, .modal-content form select {
-            width: 100%;
-            margin-bottom: 1rem;
-            padding: 0.5rem 0.7rem;
-            border-radius: 0.5rem;
-            border: 1px solid #ccc;
-        }
-        .modal-content form button[type="submit"] {
-            width: 100%;
-            padding: 0.7rem;
-            border-radius: 0.7rem;
-            border: none;
-            background: var(--theme-green);
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .modal-content form button[type="submit"]:hover {
-            background: var(--theme-green-dark);
-        }
-        /* Delete Modal Buttons */
-        .confirm-delete {
-            background: var(--action-delete);
-            color: #fff;
-            border: none;
-            border-radius: 0.5rem;
-            padding: 0.6rem 1.3rem;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-right: 0.7rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .confirm-delete:hover {
-            background: #c0392b;
-        }
-        .cancel-delete {
-            background: #f5f6fa;
-            color: #222;
-            border: 1px solid #ccc;
-            border-radius: 0.5rem;
-            padding: 0.6rem 1.3rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-        .cancel-delete:hover {
-            background: #ededed;
-            color: var(--theme-green);
-        }
-        /* Download icon button in table cell */
-        .download-table-btn {
-            background: none;
-            border: none;
-            color: #008000;
-            border-radius: 50%;
-            padding: 0.3rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s, color 0.2s;
-            margin: 0 auto; /* Center horizontally */
-        }
-        .download-table-btn i {
-            font-size: 1.05em;
-            color: #008000;
-            transition: color 0.2s;
-        }
-        .download-table-btn:hover, .download-table-btn:focus {
-            background: #e6f5ea;
-        }
-        .download-table-btn:hover i, .download-table-btn:focus i {
-            color: #005c00;
-        }
-        /* Center the download button in the table cell */
-        .reservation-table td:last-child {
-            text-align: center;
-            vertical-align: middle;
-        }
-        /* Responsive Styles */
-        @media (max-width: 1200px) {
-            .stats-cards {
-                grid-template-columns: 1fr 1fr;
-            }
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 900px) {
-            .main-content {
-                padding: 1rem;
-            }
-        }
-        @media (max-width: 700px) {
-            .sidebar {
-                left: -200px;
-                width: 180px;
-            }
-            .sidebar.active {
-                left: 0;
-            }
-            .top-bar {
-                left: 0;
-                padding-left: 0.5rem;
-            }
-            .main-content {
-                margin-left: 0;
-            }
-            .top-bar-toggle {
-                display: block;
-            }
-        }
-        @media (max-width: 600px) {
-            .main-content {
-                padding: 0.5rem;
-            }
-        }
-        .section-toggle {
-            background: none;
-            border: none;
-            color: #e6e6e6;
-            font-size: 1.08rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.1rem;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0.35rem 0.6rem 0.35rem 0;
-            outline: none;
-            border-radius: 5px;
-            transition: background 0.18s, color 0.18s;
-        }
-        .section-toggle:focus, .section-toggle:hover {
-            color: #fff;
-            background: rgba(255,255,255,0.10);
-        }
-        .section-label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.08rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .section-label i {
-            font-size: 1.15rem;
-            opacity: 0.95;
-        }
-        .chevron {
-            margin-left: auto;
-            font-size: 1.1rem;
-            transition: transform 0.25s cubic-bezier(.4,2,.6,1), color 0.18s;
-        }
-        .section-toggle[aria-expanded="false"] .chevron {
-            transform: rotate(-90deg);
-        }
-        .section-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            width: 100%;
-            transition: max-height 0.2s, opacity 0.2s;
-            overflow: hidden;
-            opacity: 1;
-            max-height: 500px;
-            margin-bottom: 0.2rem;
-        }
-        .section-links.collapsed {
-            opacity: 0;
-            max-height: 0;
-            pointer-events: none;
-        }
-        .sidebar .nav-section {
-            margin-bottom: 0.2rem;
-        }
-        .sidebar-section-label {
-            display: block;
-            color: #fff;
-            font-size: 0.93rem;
-            font-weight: 400;
-            opacity: 0.85;
-            margin: 0.5rem 0 0.1rem 0.1rem;
-            padding-left: 0.2rem;
-            letter-spacing: 0.5px;
-            cursor: default;
-            user-select: none;
-        }
-        /* Download icon button in table cell */
-        .download-table-btn {
-            background: none;
-            border: none;
-            color: #008000;
-            border-radius: 50%;
-            padding: 0.3rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s, color 0.2s;
-            margin: 0 auto; /* Center horizontally */
-        }
-        .download-table-btn i {
-            font-size: 1.05em;
-            color: #008000;
-            transition: color 0.2s;
-        }
-        .download-table-btn:hover, .download-table-btn:focus {
-            background: #e6f5ea;
-        }
-        .download-table-btn:hover i, .download-table-btn:focus i {
-            color: #005c00;
-        }
-        /* Center the download button in the table cell */
-
-         /* Logout Button Styles */
-         .sidebar-logout {
-            margin-top: auto;
-            padding: 1rem;
-            width: 100%;
-        }
-
-        .logout-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
-        }
-
-        .logout-btn i {
-            font-size: 1.1rem;
-        }
-  </style>
+<style>
+:root{--bg:#f5f6f4;--surface:#fff;--soft:#f8faf8;--text:#17221c;--muted:#778078;--line:#e7ebe7;--primary:#214f3b;--primary2:#2e6b50;--primarysoft:#e8f1ec;--gold:#b48a45;--danger:#c95757;--sidebar:250px;--shadow:0 10px 30px rgba(22,40,30,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar);background:#17382b;color:#fff;padding:26px 18px 18px;z-index:1000;display:flex;flex-direction:column;transition:transform .25s}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 10px 30px}.brand img{width:46px;height:46px;object-fit:contain;border-radius:12px;background:rgba(255,255,255,.08)}.brand strong{display:block;font-family:"Playfair Display",serif;font-size:19px}.brand span{display:block;color:#afc4b8;font-size:11px;margin-top:2px}
+.nav-label{color:#8fa99b;font-size:10px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;padding:0 12px 9px}.nav-section{margin-bottom:20px}.nav-link{display:flex;align-items:center;gap:12px;color:#dbe7e0;text-decoration:none;padding:11px 13px;border-radius:12px;margin:3px 0;font-size:13px;transition:.2s}.nav-link i{width:18px;text-align:center;color:#a9c1b4}.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}.nav-link.active{background:#fff;color:var(--primary);font-weight:700;box-shadow:0 7px 20px rgba(0,0,0,.1)}.nav-link.active i{color:var(--primary)}.sidebar-bottom{margin-top:auto}.logout{border-top:1px solid rgba(255,255,255,.09);padding-top:14px}
+.main{margin-left:var(--sidebar);min-height:100vh}.topbar{height:76px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:900}.topbar-left{display:flex;align-items:center;gap:14px}.menu-btn{display:none;border:0;background:var(--soft);width:40px;height:40px;border-radius:11px;cursor:pointer}.breadcrumb{color:var(--muted);font-size:12px}.top-actions{display:flex;align-items:center;gap:14px}.icon-btn{width:40px;height:40px;border:1px solid var(--line);border-radius:11px;background:#fff;color:#536058;cursor:pointer;position:relative}.notification-dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--gold);right:8px;top:8px;border:2px solid #fff}.profile{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}.profile strong{display:block;font-size:12px}.profile span{display:block;color:var(--muted);font-size:10px;margin-top:1px}
+.content{padding:32px;max-width:1500px;margin:auto}.page-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px}.eyebrow{color:var(--primary2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:7px}h1{font-family:"Playfair Display",serif;font-size:32px;line-height:1.15;letter-spacing:-.5px}.page-heading p{color:var(--muted);font-size:13px;margin-top:7px}
+.toolbar{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);margin-bottom:18px}.search-wrapper{position:relative;flex:1;max-width:520px}.search-wrapper i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#98a19b;font-size:13px}.search-input{width:100%;height:42px;border:1px solid var(--line);border-radius:11px;padding:0 15px 0 40px;outline:none;background:var(--soft);font-size:12px}.search-input:focus{border-color:#b8ccc0;background:#fff;box-shadow:0 0 0 3px rgba(46,107,80,.08)}.toolbar-spacer{flex:1}.create-btn,.filter-btn{border-radius:11px;height:42px;padding:0 16px;cursor:pointer;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px}.create-btn{border:0;background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(33,79,59,.18)}.create-btn:hover{background:var(--primary2)}.filter-btn{background:#fff;color:#4e5a52;border:1px solid var(--line)}.filter-btn:hover{background:var(--soft)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid var(--line)}.panel-title{font-size:15px;font-weight:700}.panel-subtitle{color:var(--muted);font-size:11px;margin-top:4px}.table-wrap{overflow-x:auto}.reservation-table{width:100%;border-collapse:collapse;min-width:800px}.reservation-table th{color:#9aa39d;font-size:9px;text-transform:uppercase;letter-spacing:.7px;text-align:left;padding:13px 16px;background:#fbfcfb;border-bottom:1px solid var(--line)}.reservation-table td{padding:13px 16px;border-bottom:1px solid #f0f2f0;font-size:11px;color:#536057;vertical-align:middle}.reservation-table tbody tr:hover{background:#fbfdfb}.reservation-table tbody tr:last-child td{border-bottom:0}.guest-cell{display:flex;align-items:center;gap:10px}.guest-avatar{width:34px;height:34px;border-radius:10px;background:var(--primarysoft);color:var(--primary);display:grid;place-items:center;font-size:10px;font-weight:700;flex:none}.guest-name strong{display:block;color:var(--text);font-size:12px}.guest-name span{display:block;color:var(--muted);font-size:9px;margin-top:2px}.id-badge{background:#f1f4f1;border-radius:7px;padding:5px 8px;font-size:10px;color:#4f5b53}.contact i{width:15px;color:#9aa39d;margin-right:3px}.action-group{display:flex;gap:5px;justify-content:center}.action-btn,.download-table-btn{width:31px;height:31px;border:1px solid var(--line);border-radius:9px;background:#fff;display:inline-grid;place-items:center;cursor:pointer;transition:.18s}.action-btn i,.download-table-btn i{font-size:11px}.edit-btn i{color:var(--primary2)}.view-btn i{color:#548c75}.delete-btn i{color:var(--danger)}.action-btn:hover,.download-table-btn:hover{background:var(--primarysoft);border-color:#c8dbcf}.delete-btn:hover{background:#fff2f2!important;border-color:#f0cccc!important}.empty-state{padding:45px;text-align:center;color:var(--muted);font-size:12px}
+.modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(13,25,19,.48);backdrop-filter:blur(4px);padding:20px;overflow:auto}.modal-content{background:#fff;width:min(650px,100%);margin:5vh auto;padding:28px;border-radius:20px;position:relative;box-shadow:0 25px 70px rgba(0,0,0,.18)}.modal-content h2{font-family:"Playfair Display",serif;font-size:23px;margin-bottom:20px}.close{position:absolute;right:18px;top:16px;width:34px;height:34px;border-radius:9px;background:#f5f7f5;color:#6d776f;display:grid;place-items:center;cursor:pointer;font-size:20px}.modal-content form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.modal-content form p{margin:0}.modal-content form input,.modal-content form select{width:100%;height:42px;padding:0 11px;border-radius:10px;border:1px solid var(--line);background:var(--soft);outline:none;font-size:12px}.modal-content label{display:block;font-size:10px;font-weight:700;color:#657067;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}.modal-content form button[type=submit]{grid-column:1/-1;height:44px;border:0;border-radius:11px;background:var(--primary);color:#fff;font-size:12px;font-weight:700;cursor:pointer;margin-top:4px}.modal-content form p:last-of-type{grid-column:auto}.confirm-delete{background:var(--danger);color:#fff;border:0;border-radius:10px;padding:11px 17px;font-size:12px;font-weight:700;cursor:pointer}.cancel-delete{background:#f5f7f5;color:#445047;border:1px solid var(--line);border-radius:10px;padding:11px 17px;font-size:12px;font-weight:700;cursor:pointer}#viewDetails{display:grid;grid-template-columns:1fr 1fr;gap:10px}#viewDetails p{background:var(--soft);border:1px solid var(--line);padding:12px;border-radius:11px;font-size:11px}#viewDetails label{display:block;font-size:9px;color:var(--muted);font-weight:700;margin-bottom:4px}.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:999}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.active{transform:translateX(0)}.overlay.active{display:block}.main{margin-left:0}.menu-btn{display:block}.topbar{padding:0 18px}.content{padding:22px 16px}}
+@media(max-width:650px){.profile-text{display:none}.page-heading{align-items:flex-start;flex-direction:column}h1{font-size:27px}.toolbar{flex-wrap:wrap}.search-wrapper{max-width:none;flex-basis:100%}.toolbar-spacer{display:none}.modal-content form,#viewDetails{grid-template-columns:1fr}.modal-content{padding:22px}}
+</style>
 </head>
-<body>
-  <!-- Sidebar Navigation -->
-  <div class="sidebar" id="sidebar">
-            <div class="sidebar-logo">
-                <img src="images/villavalorelogo.png" alt="Villa Valore Logo">
-            </div>
-            <div class="sidebar-title">Villa Valore</div>
-            <div class="sidebar-nav-center">
-                <div class="nav-section">
-                    <a class="nav-link" href="index.php"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
-                </div>
-                <div class="nav-section">
-                    <span class="sidebar-section-label">Management</span>
-                    <a class="nav-link" href="student.php"><i class="fas fa-user"></i><span>Guest</span></a>
-                    <a class="nav-link" href="booking.php"><i class="fas fa-book"></i><span>Booking</span></a>
-                    <a class="nav-link" href="reservation.php"><i class="fas fa-calendar-check"></i><span>Reservation</span></a>
-                </div>
-                <div class="nav-section">
-                    <span class="sidebar-section-label">Resources</span>
-                    <a class="nav-link" href="room.php"><i class="fas fa-door-open"></i><span>Room</span></a>
-                    <a class="nav-link" href="inventory.php"><i class="fas fa-box"></i><span>Inventory</span></a>
-                </div>
-                <div class="nav-section">
-                    <span class="sidebar-section-label">Administration</span>
-                    <a class="nav-link" href="account.php"><i class="fas fa-user"></i><span>Account</span></a>
-                </div>
-                <div class="nav-section">
-                    <span class="sidebar-section-label">Finance & Analytics</span>
-                    <a class="nav-link" href="payment.php"><i class="fas fa-credit-card"></i><span>Invoices</span></a>
-                    <a class="nav-link" href="statistics.php"><i class="fas fa-chart-line"></i><span>Statistics</span></a>
-                </div>
-                <div class="nav-section sidebar-logout">
-                    <a class="logout-btn" href="logout.php"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
-                </div>
-            </div>
-        </div>
-  <script>
-  document.querySelectorAll('.section-toggle').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-          const expanded = btn.getAttribute('aria-expanded') === 'true';
-          btn.setAttribute('aria-expanded', !expanded);
-          const sectionId = btn.getAttribute('aria-controls');
-          const sectionLinks = document.getElementById(sectionId);
-          if (sectionLinks) {
-              sectionLinks.classList.toggle('collapsed', expanded);
-          }
-      });
-      btn.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              btn.click();
-          }
-      });
-  });
-  </script>
 
-<div class="main-content">
-    <div class="reservation-section">
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-        <h1 style="margin-bottom: 0; border-bottom: 4px solid rgb(255, 255, 255); display: inline-block; padding-bottom: 0.2rem;">Guest</h1>
-        <div class="search-filter-bar">
-          <div class="search-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Search Guests">
-          </div>
-          <button class="create-btn" id="createBtn">Add Guest</button>
-        </div>
-      </div>
+<body>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><img src="images/villavalorelogo.png" alt="Villa Valore"><div><strong>Villa Valore</strong><span>Hotel Management</span></div></div>
+  <div class="nav-section"><div class="nav-label">Overview</div><a class="nav-link" href="index.php"><i class="fas fa-grid-2"></i><span>Dashboard</span></a></div>
+  <div class="nav-section"><div class="nav-label">Management</div><a class="nav-link active" href="student.php"><i class="fas fa-users"></i><span>Guests</span></a><a class="nav-link" href="booking.php"><i class="fas fa-book-open"></i><span>Bookings</span></a><a class="nav-link" href="reservation.php"><i class="fas fa-calendar-check"></i><span>Reservations</span></a></div>
+  <div class="nav-section"><div class="nav-label">Operations</div><a class="nav-link" href="room.php"><i class="fas fa-bed"></i><span>Rooms</span></a><a class="nav-link" href="inventory.php"><i class="fas fa-boxes-stacked"></i><span>Inventory</span></a></div>
+  <div class="nav-section"><div class="nav-label">Finance</div><a class="nav-link" href="payment.php"><i class="fas fa-receipt"></i><span>Invoices</span></a><a class="nav-link" href="statistics.php"><i class="fas fa-chart-line"></i><span>Analytics</span></a></div>
+  <div class="sidebar-bottom"><div class="logout"><a class="nav-link" href="logout.php"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a></div></div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div class="topbar-left"><button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button><div class="breadcrumb">Management / <strong>Guests</strong></div></div>
+  <div class="top-actions"><button class="icon-btn"><i class="far fa-bell"></i><span class="notification-dot"></span></button><div class="profile"><div class="avatar">VV</div><div class="profile-text"><strong>Villa Valore</strong><span>Administrator</span></div></div></div>
+</header>
+
+<section class="content">
+  <div class="page-heading">
+    <div><div class="eyebrow">Guest Management</div><h1>Guests</h1><p>Manage guest profiles, contact details, and records.</p></div>
+    <button class="create-btn" id="createBtn"><i class="fas fa-plus"></i> Add Guest</button>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrapper"><i class="fas fa-search"></i><input type="text" id="searchInput" class="search-input" placeholder="Search by name, email, phone, or guest ID..."></div>
+    <div class="toolbar-spacer"></div>
+    <button class="filter-btn" onclick="showDownloadModal(event)"><i class="fas fa-download"></i> Export</button>
+  </div>
+
+  <section class="panel">
+    <div class="panel-head"><div><div class="panel-title">Guest Directory</div><div class="panel-subtitle">All registered guests</div></div><div class="panel-subtitle"><?php echo $resResult ? $resResult->num_rows : 0; ?> records</div></div>
+    <div class="table-wrap">
       <table class="reservation-table">
-        <thead>
-          <tr>
-            <th>Guest ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>Actions</th>
-            <th>Download</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Guest</th><th>Guest ID</th><th>Phone</th><th>Email</th><th style="text-align:center">Actions</th><th style="text-align:center">Export</th></tr></thead>
         <tbody>
         <?php if ($resResult && $resResult->num_rows > 0): ?>
           <?php while($row = $resResult->fetch_assoc()): ?>
+          <?php $fullName=trim(($row['FirstName']??'').' '.($row['LastName']??'')); $initials=strtoupper(substr($row['FirstName']??'G',0,1).substr($row['LastName']??'',0,1)); ?>
           <tr data-id="<?php echo $row['StudentID']; ?>">
-            <td><b><?php echo $row['StudentID']; ?></b></td>
-            <td><b><?php echo htmlspecialchars($row['FirstName']); ?></b></td>
-            <td><b><?php echo htmlspecialchars($row['LastName']); ?></b></td>
-            <td><?php echo $row['PhoneNumber']; ?></td>
-            <td><?php echo $row['Email']; ?></td>
-            <td>
-              <div class="action-group">
-                <button type="button" class="action-btn edit-btn"
-                  data-id="<?php echo $row['StudentID']; ?>"
-                  data-firstname="<?php echo htmlspecialchars($row['FirstName']); ?>"
-                  data-lastname="<?php echo htmlspecialchars($row['LastName']); ?>"
-                  data-gender="<?php echo htmlspecialchars($row['Gender']); ?>"
-                  data-phonenumber="<?php echo htmlspecialchars($row['PhoneNumber']); ?>"
-                  data-address="<?php echo htmlspecialchars($row['Address']); ?>"
-                  data-email="<?php echo htmlspecialchars($row['Email']); ?>"
-                  data-nationality="<?php echo htmlspecialchars($row['Nationality']); ?>"
-                  data-birthdate="<?php echo htmlspecialchars($row['Birthdate']); ?>"
-                ><i class="fas fa-edit"></i></button>
-                <button type="button" class="action-btn view-btn"
-                  data-id="<?php echo $row['StudentID']; ?>"
-                  data-firstname="<?php echo htmlspecialchars($row['FirstName']); ?>"
-                  data-lastname="<?php echo htmlspecialchars($row['LastName']); ?>"
-                  data-gender="<?php echo htmlspecialchars($row['Gender']); ?>"
-                  data-phonenumber="<?php echo htmlspecialchars($row['PhoneNumber']); ?>"
-                  data-address="<?php echo htmlspecialchars($row['Address']); ?>"
-                  data-email="<?php echo htmlspecialchars($row['Email']); ?>"
-                  data-nationality="<?php echo htmlspecialchars($row['Nationality']); ?>"
-                  data-birthdate="<?php echo htmlspecialchars($row['Birthdate']); ?>"
-                ><i class="fas fa-eye"></i></button>
-                <button type="button" class="action-btn delete-btn"
-                  data-id="<?php echo $row['StudentID']; ?>"
-                ><i class="fas fa-trash"></i></button>
-              </div>
-            </td>
-            <td>
-              <button class="download-table-btn" title="Download Table" onclick="showDownloadModal(event)">
-                          <i class="fas fa-download"></i>
-                        </button>
-                      </td>
+            <td><div class="guest-cell"><div class="guest-avatar"><?php echo htmlspecialchars($initials?:'G'); ?></div><div class="guest-name"><strong><?php echo htmlspecialchars($fullName); ?></strong><span><?php echo htmlspecialchars($row['Nationality']??''); ?></span></div></div></td>
+            <td><span class="id-badge">#<?php echo htmlspecialchars($row['StudentID']); ?></span></td>
+            <td class="contact"><i class="fas fa-phone"></i><?php echo htmlspecialchars($row['PhoneNumber']); ?></td>
+            <td class="contact"><i class="fas fa-envelope"></i><?php echo htmlspecialchars($row['Email']); ?></td>
+            <td><div class="action-group">
+              <button type="button" class="action-btn edit-btn" data-id="<?php echo $row['StudentID']; ?>" data-firstname="<?php echo htmlspecialchars($row['FirstName']); ?>" data-lastname="<?php echo htmlspecialchars($row['LastName']); ?>" data-gender="<?php echo htmlspecialchars($row['Gender']); ?>" data-phonenumber="<?php echo htmlspecialchars($row['PhoneNumber']); ?>" data-address="<?php echo htmlspecialchars($row['Address']); ?>" data-email="<?php echo htmlspecialchars($row['Email']); ?>" data-nationality="<?php echo htmlspecialchars($row['Nationality']); ?>" data-birthdate="<?php echo htmlspecialchars($row['Birthdate']); ?>"><i class="fas fa-pen"></i></button>
+              <button type="button" class="action-btn view-btn" data-id="<?php echo $row['StudentID']; ?>" data-firstname="<?php echo htmlspecialchars($row['FirstName']); ?>" data-lastname="<?php echo htmlspecialchars($row['LastName']); ?>" data-gender="<?php echo htmlspecialchars($row['Gender']); ?>" data-phonenumber="<?php echo htmlspecialchars($row['PhoneNumber']); ?>" data-address="<?php echo htmlspecialchars($row['Address']); ?>" data-email="<?php echo htmlspecialchars($row['Email']); ?>" data-nationality="<?php echo htmlspecialchars($row['Nationality']); ?>" data-birthdate="<?php echo htmlspecialchars($row['Birthdate']); ?>"><i class="fas fa-eye"></i></button>
+              <button type="button" class="action-btn delete-btn" data-id="<?php echo $row['StudentID']; ?>"><i class="fas fa-trash"></i></button>
+            </div></td>
+            <td style="text-align:center"><button class="download-table-btn" onclick="showDownloadModal(event)" title="Export"><i class="fas fa-download"></i></button></td>
           </tr>
           <?php endwhile; ?>
-        <?php else: ?>
-          <tr><td colspan="7">No students found.</td></tr>
-        <?php endif; ?>
+        <?php else: ?><tr><td colspan="6"><div class="empty-state"><i class="fas fa-users" style="font-size:28px;opacity:.35"></i><br><br>No guests found.</div></td></tr><?php endif; ?>
         </tbody>
       </table>
     </div>
-  </div>
-  <!-- Edit Modal -->
-  <div id="editModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeEditModal">&times;</span>
-      <h2>Edit Student</h2>
-      <form id="editForm">
-        <input type="hidden" name="OriginalStudentID" id="editOriginalStudentID">
-        <p><label>Student ID:</label><br><input type="text" name="StudentID" id="editStudentID" required></p>
-        <p><label>First Name:</label><br><input type="text" name="FirstName" id="editFirstName" required></p>
-        <p><label>Last Name:</label><br><input type="text" name="LastName" id="editLastName" required></p>
-        <p><label>Gender:</label><br>
-          <select name="Gender" id="editGender" required>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Prefer not to say">Prefer not to say</option>
-          </select>
-        </p>
-        <p><label>Phone Number:</label><br><input type="text" name="PhoneNumber" id="editPhoneNumber" required></p>
-        <p><label>Address:</label><br><input type="text" name="Address" id="editAddress" required></p>
-        <p><label>Email:</label><br><input type="email" name="Email" id="editEmail" required></p>
-        <p><label>Nationality:</label><br><input type="text" name="Nationality" id="editNationality" required></p>
-        <p><label>Birthdate:</label><br><input type="date" name="Birthdate" id="editBirthdate" required></p>
-        <button type="submit" style="margin-top:1rem;">Save</button>
-      </form>
-    </div>
-  </div>
-  <!-- View Modal -->
-  <div id="viewModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeViewModal">&times;</span>
-      <h2>View Student Info</h2>
-      <div id="viewDetails"></div>
-    </div>
-    </div>
-  
-  <!-- Download Modal -->
-  <div id="downloadModal" class="modal">
-    <div class="modal-content" style="width: 350px;">
-      <span class="close" id="closeDownloadModal">&times;</span>
-      <h2>Download Table</h2>
-      <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-        <button class="filter-btn" id="copyTableBtn"><i class="fas fa-copy"></i> Copy </button>
-        <button class="filter-btn" id="csvTableBtn"><i class="fas fa-file-csv"></i> CSV File</button>
-        <button class="filter-btn" id="excelTableBtn"><i class="fas fa-file-excel"></i> Excel File</button>
-        <button class="filter-btn" id="pdfTableBtn"><i class="fas fa-file-pdf"></i> PDF File</button>
-        <button class="filter-btn" id="printTableBtn"><i class="fas fa-file-pdf"></i> Print File</button>
-      </div>
-    </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script>
+  </section>
+</section>
+</main>
+
+<!-- Modals keep the same IDs expected by the existing CRUD scripts -->
+<div id="editModal" class="modal"><div class="modal-content"><span class="close" id="closeEditModal">&times;</span><h2>Edit Guest</h2><form id="editForm">
+<input type="hidden" name="OriginalStudentID" id="editOriginalStudentID">
+<p><label>Guest ID</label><input type="text" name="StudentID" id="editStudentID" required></p><p><label>First Name</label><input type="text" name="FirstName" id="editFirstName" required></p><p><label>Last Name</label><input type="text" name="LastName" id="editLastName" required></p><p><label>Gender</label><select name="Gender" id="editGender" required><option value="Male">Male</option><option value="Female">Female</option><option value="Prefer not to say">Prefer not to say</option></select></p><p><label>Phone Number</label><input type="text" name="PhoneNumber" id="editPhoneNumber" required></p><p><label>Address</label><input type="text" name="Address" id="editAddress" required></p><p><label>Email</label><input type="email" name="Email" id="editEmail" required></p><p><label>Nationality</label><input type="text" name="Nationality" id="editNationality" required></p><p><label>Birthdate</label><input type="date" name="Birthdate" id="editBirthdate" required></p><button type="submit">Save Changes</button>
+</form></div></div>
+
+<div id="viewModal" class="modal"><div class="modal-content"><span class="close" id="closeViewModal">&times;</span><h2>Guest Information</h2><div id="viewDetails"></div></div></div>
+
+<div id="downloadModal" class="modal"><div class="modal-content" style="width:350px"><span class="close" id="closeDownloadModal">&times;</span><h2>Export Guests</h2><div style="display:flex;flex-direction:column;gap:9px;margin-top:12px">
+<button class="filter-btn" id="copyTableBtn"><i class="fas fa-copy"></i> Copy</button><button class="filter-btn" id="csvTableBtn"><i class="fas fa-file-csv"></i> CSV File</button><button class="filter-btn" id="excelTableBtn"><i class="fas fa-file-excel"></i> Excel File</button><button class="filter-btn" id="pdfTableBtn"><i class="fas fa-file-pdf"></i> PDF File</button><button class="filter-btn" id="printTableBtn"><i class="fas fa-print"></i> Print</button>
+</div></div></div>
+
+<div id="createModal" class="modal"><div class="modal-content"><span class="close" id="closeCreateModal">&times;</span><h2>Add Guest</h2><form id="createForm">
+<input type="hidden" name="createStudent" value="1"><p><label>Guest ID</label><input type="text" name="StudentID" required></p><p><label>First Name</label><input type="text" name="FirstName" required></p><p><label>Last Name</label><input type="text" name="LastName" required></p><p><label>Gender</label><select name="Gender" required><option value="Male">Male</option><option value="Female">Female</option><option value="Prefer not to say">Prefer not to say</option></select></p><p><label>Phone Number</label><input type="text" name="PhoneNumber" required></p><p><label>Address</label><input type="text" name="Address" required></p><p><label>Email</label><input type="email" name="Email" required></p><p><label>Nationality</label><input type="text" name="Nationality" required></p><p><label>Birthdate</label><input type="date" name="Birthdate" required></p><button type="submit">Create Guest</button>
+</form></div></div>
+
+<div id="deleteModal" class="modal"><div class="modal-content" style="width:420px"><span class="close" id="closeDeleteModal">&times;</span><h2>Delete Guest</h2><p style="color:var(--muted);font-size:12px;line-height:1.6">Are you sure you want to permanently delete this guest record?</p><div style="margin-top:20px;display:flex;gap:8px;justify-content:flex-end"><button class="cancel-delete">Cancel</button><button class="confirm-delete">Delete Guest</button></div></div></div>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+ const sidebar=document.getElementById('sidebar'), menu=document.getElementById('menuBtn'), overlay=document.getElementById('overlay');
+ if(menu) menu.onclick=()=>{sidebar.classList.toggle('active');overlay.classList.toggle('active')};
+ overlay.onclick=()=>{sidebar.classList.remove('active');overlay.classList.remove('active')};
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
     // Download Modal logic
     const downloadModal = document.getElementById('downloadModal');
     const closeDownloadModal = document.getElementById('closeDownloadModal');
@@ -1093,49 +348,9 @@ if (count($where) > 0) {
       downloadModal.style.display = 'none';
     };
   </script>
-  <!-- jsPDF autotable plugin -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
-  <!-- Create Student Modal -->
-  <div id="createModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeCreateModal">&times;</span>
-      <h2>Add Guest</h2>
-      <form id="createForm">
-        <input type="hidden" name="createStudent" value="1">
-        
-        <p><label>Student ID: </label><br><input type="text" name="StudentID" required></p>
-        <p><label>First Name:</label><br><input type="text" name="FirstName" required></p>
-        <p><label>Last Name:</label><br><input type="text" name="LastName" required></p>
-        <p><label>Gender:</label><br>
-          <select name="Gender" required>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Prefer not to say">Prefer not to say</option>
-          </select>
-        </p>
-        <p><label>Phone Number:</label><br><input type="text" name="PhoneNumber" required></p>
-        <p><label>Address:</label><br><input type="text" name="Address" required></p>
-        <p><label>Email:</label><br><input type="email" name="Email" required></p>
-        <p><label>Nationality:</label><br><input type="text" name="Nationality" required></p>
-        <p><label>Birthdate:</label><br><input type="date" name="Birthdate" required></p>
-        <button type="submit">Create</button>
-      </form>
-    </div>
-  </div>
-  <!-- Delete Modal -->
-  <div id="deleteModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeDeleteModal">&times;</span>
-      <h2>Delete Student</h2>
-      <p>Are you sure you want to delete this student?</p>
-      <div style="margin-top:1.5rem;">
-        <button class="confirm-delete">Delete</button>
-        <button class="cancel-delete">Cancel</button>
-      </div>
-    </div>
-  </div>
-  <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
   // --- Modal Logic ---
   const editModal = document.getElementById('editModal');
   const closeEditModal = document.getElementById('closeEditModal');

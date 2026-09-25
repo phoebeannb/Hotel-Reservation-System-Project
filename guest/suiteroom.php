@@ -289,7 +289,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 40px;
-      margin-top: 60px;
+      margin-top: 80px;
     }
 
     .room-card {
@@ -446,7 +446,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 30px;
-      margin-top: 60px;
+      margin-top: 80px;
     }
 
     .amenity-item {
@@ -879,7 +879,7 @@
 
       .amenities-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 10px;
       }
 
       .room-actions {
@@ -1291,7 +1291,7 @@
       .rooms-section,
       .amenities-section,
       .contact-section {
-        padding: 70px 0;
+        padding: 80px 0;
       }
 
       .section-header {
